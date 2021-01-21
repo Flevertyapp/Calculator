@@ -19,4 +19,5 @@
     <string name="btn_0">0</string>
     <string name="btn_pointer">.</string>
     <string name="btn_equally">=</string>
+    <string name="hardcode_view">1234567890</string>
 </resources>

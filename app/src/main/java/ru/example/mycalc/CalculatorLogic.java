@@ -1,3 +1,4 @@
+/*
 package ru.example.mycalc;
 
 import android.util.Log;
@@ -129,4 +130,4 @@ public class CalculatorLogic {
     public String getText() { //геттер для текста
         return inputStr.toString();
     }
-}
+}*/
