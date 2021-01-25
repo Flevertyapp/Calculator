@@ -9,15 +9,16 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private CalculatorLogic calculator = new CalculatorLogic();
-    private TextView textView;
+   /* private CalculatorLogic calculator = new CalculatorLogic();
+    private TextView textView;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        int[] numberButtonsID = new int[]{      //массив айдишников цифровых кнопок
+
+        /*int[] numberButtonsID = new int[]{      //массив айдишников цифровых кнопок
                 R.id.button_0,
                 R.id.button_1,
                 R.id.button_2,
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < actionButtonsID.length; i++) {
             findViewById(actionButtonsID[i]).setOnClickListener(actionButtonClickListener);
-        }
+        }*/
 
     }
 }
