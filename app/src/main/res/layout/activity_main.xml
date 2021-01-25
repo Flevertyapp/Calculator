@@ -16,6 +16,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_weight="2" />
 
+    <TextView
+        android:id="@+id/text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/space" />
+
+
     <Button
         android:id="@+id/button_1"
         android:layout_width="@dimen/zero_dp"
@@ -48,6 +58,7 @@
         android:layout_marginBottom="@dimen/margin"
         android:alpha="0.7"
         android:backgroundTint="@color/ivory"
+        android:insetBottom="6dp"
         android:text="@string/btn_2"
         android:textColor="@color/black"
         android:textSize="@dimen/button_text"
@@ -55,7 +66,6 @@
         app:layout_constraintEnd_toStartOf="@id/button_3"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@id/button_1"
-
         app:layout_constraintTop_toBottomOf="@id/button_5"
         app:layout_constraintVertical_weight="1" />
 
@@ -353,6 +363,8 @@
         android:layout_marginBottom="@dimen/margin"
         android:alpha="0.7"
         android:backgroundTint="@color/ivory"
+        android:insetTop="6dp"
+        android:insetBottom="6dp"
         android:text="@string/btn_0"
         android:textColor="@color/black"
         android:textSize="@dimen/button_text"
