@@ -8,25 +8,24 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/text_view"
+        android:id="@+id/entry_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hardcode_view"
+        android:layout_height="@dimen/entry_view_size"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45" />
 
     <TextView
-        android:id="@+id/text_view_result"
+        android:id="@+id/result_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hardcode_view"
         android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="@id/text_view"
-        app:layout_constraintStart_toStartOf="@id/text_view"
-        app:layout_constraintTop_toBottomOf="@+id/text_view" />
+        app:layout_constraintEnd_toEndOf="@id/entry_view"
+        app:layout_constraintStart_toStartOf="@id/entry_view"
+        app:layout_constraintTop_toBottomOf="@+id/entry_view" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_division"
@@ -37,8 +36,8 @@
         android:text="@string/btn_division"
         app:layout_constraintEnd_toStartOf="@id/button_multiplication"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="@id/text_view_result"
-        app:layout_constraintTop_toBottomOf="@id/text_view_result"
+        app:layout_constraintStart_toStartOf="@id/result_view"
+        app:layout_constraintTop_toBottomOf="@id/result_view"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <com.google.android.material.button.MaterialButton
@@ -72,7 +71,7 @@
         android:layout_height="wrap_content"
         android:insetLeft="@dimen/inset_left"
         android:text="@string/btn_plus"
-        app:layout_constraintEnd_toEndOf="@id/text_view_result"
+        app:layout_constraintEnd_toEndOf="@id/result_view"
         app:layout_constraintStart_toEndOf="@id/button_minus"
         app:layout_constraintTop_toTopOf="@id/button_minus"
         app:layout_constraintVertical_chainStyle="packed" />
@@ -165,7 +164,6 @@
         android:layout_height="wrap_content"
         android:insetLeft="@dimen/inset_left"
         android:text="@string/btn_2"
-        app:layout_constraintEnd_toStartOf="@id/button_9"
         app:layout_constraintStart_toEndOf="@id/button_4"
         app:layout_constraintTop_toTopOf="@id/button_3" />
 
@@ -186,6 +184,7 @@
         android:layout_height="wrap_content"
         android:insetLeft="@dimen/inset_left"
         android:text="@string/btn_pointer"
+
         app:layout_constraintStart_toStartOf="@id/button_3"
         app:layout_constraintTop_toBottomOf="@id/button_3" />
 
@@ -208,6 +207,5 @@
         android:text="@string/btn_del"
         app:layout_constraintStart_toEndOf="@id/button_0"
         app:layout_constraintTop_toTopOf="@id/button_0" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
