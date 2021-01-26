@@ -1,133 +1,123 @@
-/*
 package ru.example.mycalc;
 
-import android.util.Log;
-import android.widget.Toast;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class CalculatorLogic {
-    private float firstArg;
-    private float secondAgr;
+public class CalculatorLogic implements Parcelable {
 
-    StringBuilder inputStr = new StringBuilder();
-    private State state;
-    private int actionSelected; //для запоминания выбранного действия
+    private String entryView;
+    private String resultView = " ";
+    private float result;
 
-    private enum State {        //задаем состояние, чтоб калк понимал что он сейчас делает
-        firstArgInput,          //ввод первого числа
-        secondArgInput,         //ввод второго числа
-        showResult,             //показ результата
+    protected CalculatorLogic(Parcel in) {
+        entryView = in.readString();
+        resultView = in.readString();
     }
 
     public CalculatorLogic() {
-        state = State.firstArgInput;
     }
 
-    public void numberButtonPressed(int numberButtonID) {
-        if (state == State.showResult) {         //если показывали результат, снова вводим первый аргумент
-            state = State.firstArgInput;
-            inputStr.setLength(0);
+    public void calculationMethod(String result) {
+        int i = 0;
+        if (result.indexOf('+') != -1) {
+            String[] values = result.split("\\+");
+            if (values.length < 2) {
+                resultView = "0";
+                return;
+            }
+            Float number1 = Float.valueOf(values[0]);
+            Float number2 = Float.valueOf(values[1]);
+            this.result = number1 + number2;
+            i++;
+        } else if (result.indexOf('-') != -1) {
+            String[] values = result.split("-");
+            if (values.length < 2) {
+                resultView = "0";
+                return;
+            }
+            Float number1 = Float.valueOf(values[0]);
+            Float number2 = Float.valueOf(values[1]);
+            this.result = number1 - number2;
+            i++;
+        } else if (result.indexOf('*') != -1) {
+            String[] values = result.split("\\*");
+            if (values.length < 2) {
+                resultView = "0";
+                return;
+            }
+            Float number1 = Float.valueOf(values[0]);
+            Float number2 = Float.valueOf(values[1]);
+            this.result = number1 * number2;
+            i++;
+        } else if (result.indexOf('/') != -1) {
+            String[] values = result.split("/");
+            if (values.length < 2) {
+                resultView = "0";
+                return;
+            }
+            Float number1 = Float.valueOf(values[0]);
+            Float number2 = Float.valueOf(values[1]);
+            this.result = number1 / number2;
+            i++;
+        } else {
+            i = 0;
         }
-        if (inputStr.length() <= 9) {  //ограничение на 10 знаков
-            switch (numberButtonID) {
-                case R.id.button_0:
-                    inputStr.append("0"); //   TODO проверка на количество нулей
-                    break;
-                case R.id.button_1:
-                    inputStr.append("1");
-                    break;
-                case R.id.button_2:
-                    inputStr.append("2");
-                    break;
-                case R.id.button_3:
-                    inputStr.append("3");
-                    break;
-                case R.id.button_4:
-                    inputStr.append("4");
-                    break;
-                case R.id.button_5:
-                    inputStr.append("5");
-                    break;
-                case R.id.button_6:
-                    inputStr.append("6");
-                    break;
-                case R.id.button_7:
-                    inputStr.append("7");
-                    break;
-                case R.id.button_8:
-                    inputStr.append("8");
-                    break;
-                case R.id.button_9:
-                    inputStr.append("9");
-                    break;
-                case R.id.button_pointer:
-                    inputStr.append(".");
-                    break;
-            }
+        if (i != 0) {
+            entryView += String.format("%s \n", result);
         }
-    }
-
-    public void actionButtonPressed(int actionButtonsID) {
-        if (actionButtonsID == R.id.button_equally && state == State.secondArgInput && inputStr.length() != 0) {   //здесь проверяем первое или второе число вводим или показ результат
-            secondAgr = Float.parseFloat(inputStr.toString());
-            state = State.showResult;
-            inputStr.setLength(0); //после показа результата обнуляем строку
-            switch (actionSelected) {
-                case R.id.button_plus:
-                    inputStr.append(firstArg + secondAgr);
-                    break;
-                case R.id.button_minus:
-                    inputStr.append(firstArg - secondAgr);
-                    break;
-                case R.id.button_multiplication:
-                    inputStr.append(firstArg * secondAgr);
-                    break;
-                case R.id.button_percent:
-                    //inputStr.append(firstArg + secondAgr);
-                    break;
-                case R.id.button_clear:
-                    //TODO надо запихнуть в отдельный метод
-                    break;
-                case R.id.button_delete:
-                    //TODO надо запихнуть в отдельный метод
-                    break;
-                case R.id.button_division:
-                    try {
-                        inputStr.append(firstArg / secondAgr);
-                    } catch (NullPointerException e) {
-                        inputStr.append(e.getMessage());
-                        inputStr.append("На ноль делить можно только в институте!"); //Не ловится- результат infinity
-                    }
-                    break;
-            }
-        } else if (inputStr.length() > 0 && state == State.firstArgInput) {
-            firstArg = Float.parseFloat(inputStr.toString());
-            state = State.secondArgInput;
-            inputStr.setLength(0);
-            switch (actionButtonsID) {
-                case R.id.button_plus:
-                    actionSelected = R.id.button_plus;
-                    break;
-                case R.id.button_minus:
-                    actionSelected = R.id.button_minus;
-                    break;
-                case R.id.button_multiplication:
-                    actionSelected = R.id.button_multiplication;
-                    break;
-                case R.id.button_percent:
-                    actionSelected = R.id.button_percent;
-                    break;
-                case R.id.button_clear:
-                    actionSelected = R.id.button_clear;
-                    break;
-                case R.id.button_division:
-                    actionSelected = R.id.button_division;
-                    break;
-
-            }
+        if (this.result % 1 == 0) {
+            resultView = String.format("%s", (int) this.result);
+        } else {
+            resultView = String.format("%s", this.result);
         }
     }
 
-    public String getText() { //геттер для текста
-        return inputStr.toString();
+    public static final Creator<CalculatorLogic> CREATOR = new Creator<CalculatorLogic>() {
+        @Override
+        public CalculatorLogic createFromParcel(Parcel in) {
+            return new CalculatorLogic(in);
+        }
+
+        @Override
+        public CalculatorLogic[] newArray(int size) {
+            return new CalculatorLogic[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
-}*/
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(resultView);
+        parcel.writeString(entryView);
+    }
+
+    public String getEntryView() {
+        return entryView;
+    }
+
+    public void setEntryView(String entryView) {
+        this.entryView = entryView;
+    }
+
+    public String getResultView() {
+        return resultView;
+    }
+
+    public void setResultView(String resultView) {
+        this.resultView = resultView;
+    }
+
+    public float getResult() {
+        return result;
+    }
+
+    public void setResult(float result) {
+        this.result = result;
+    }
+}
+
+

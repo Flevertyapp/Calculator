@@ -1,72 +1,267 @@
 package ru.example.mycalc;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-   /* private CalculatorLogic calculator = new CalculatorLogic();
-    private TextView textView;*/
+    private CalculatorLogic calculator = new CalculatorLogic();
+    private TextView entryView;
+    private TextView resultView;
+    private Button button1;
+    private Button button2;
+    private Button button3;
+    private Button button4;
+    private Button button5;
+    private Button button6;
+    private Button button7;
+    private Button button8;
+    private Button button9;
+    private Button button0;
+    private Button buttonPointer;
+    private Button buttonPlus;
+    private Button buttonMinus;
+    private Button buttonMultiplication;
+    private Button buttonDivision;
+    private Button buttonEqually;
+    private Button buttonDel;
+
+    int resetCount = 0;
+    int eqCount = 0;
+    boolean flag = false;
+
+    private final static String KeyHistory = "history";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        /*int[] numberButtonsID = new int[]{      //массив айдишников цифровых кнопок
-                R.id.button_0,
-                R.id.button_1,
-                R.id.button_2,
-                R.id.button_3,
-                R.id.button_4,
-                R.id.button_5,
-                R.id.button_6,
-                R.id.button_7,
-                R.id.button_8,
-                R.id.button_9,
-                R.id.button_pointer
-        };
-
-        int[] actionButtonsID = new int[]{      //массив айдишников кнопок действий
-                R.id.button_plus,
-                R.id.button_minus,
-                R.id.button_multiplication,
-                R.id.button_percent,
-                R.id.button_clear,
-                R.id.button_delete,
-                R.id.button_division,
-                R.id.button_equally
-        };
-
-        textView = findViewById(R.id.text_view);
-        View.OnClickListener numberButtonClickListener = new View.OnClickListener() {   //слушатель для числовых кнопок
-            @Override
-            public void onClick(View v) {
-                calculator.numberButtonPressed(v.getId());  //получаем id
-                textView.setText(calculator.getText());  //вытягиваем текст
-            }
-        };
-
-        View.OnClickListener actionButtonClickListener = new View.OnClickListener() {   ////слушатель для кнопок действий
-            @Override
-            public void onClick(View v) {
-                calculator.actionButtonPressed(v.getId());
-                textView.setText(calculator.getText());
-            }
-        };
-
-        for (int i = 0; i < numberButtonsID.length; i++) {          //вытягиваем id нажатой кнопки
-            findViewById(numberButtonsID[i]).setOnClickListener(numberButtonClickListener);
-        }
-
-        for (int i = 0; i < actionButtonsID.length; i++) {
-            findViewById(actionButtonsID[i]).setOnClickListener(actionButtonClickListener);
-        }*/
-
+        initView();
     }
+
+    private void initView() {
+        entryView = findViewById(R.id.entry_view);
+        resultView = findViewById(R.id.result_view);
+        button0 = findViewById(R.id.button_0);
+        button1 = findViewById(R.id.button_1);
+        button2 = findViewById(R.id.button_2);
+        button3 = findViewById(R.id.button_3);
+        button4 = findViewById(R.id.button_4);
+        button5 = findViewById(R.id.button_5);
+        button6 = findViewById(R.id.button_6);
+        button7 = findViewById(R.id.button_7);
+        button8 = findViewById(R.id.button_8);
+        button9 = findViewById(R.id.button_9);
+        buttonPointer = findViewById(R.id.button_pointer);
+        buttonPlus = findViewById(R.id.button_plus);
+        buttonMinus = findViewById(R.id.button_minus);
+        buttonMultiplication = findViewById(R.id.button_multiplication);
+        buttonDivision = findViewById(R.id.button_division);
+        buttonEqually = findViewById(R.id.button_equally);
+        buttonDel = findViewById(R.id.button_del);
+        setButtonListener();
+    }
+
+    @SuppressLint("DefaultLocale")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case (R.id.button_1):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 1));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 1));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_2):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 2));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 2));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_3):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 3));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 3));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_4):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 4));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 4));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_5):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 5));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 5));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_6):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 6));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 6));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_7):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 7));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 7));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_8):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 8));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 8));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_9):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 9));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 9));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_0):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%d", 0));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%d", 0));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_pointer):
+                if (resultView.getText().toString().equals("0") || eqCount > 0) {
+                    resultView.setText(String.format("%c", '.'));
+                    eqCount = 0;
+                } else {
+                    resultView.append(String.format("%c", '.'));
+                }
+                resetCount = 0;
+                break;
+            case (R.id.button_minus):
+                if (flag == false) {
+                    eqCount = 0;
+                    resultView.append(String.format("%c", '-'));
+                    flag = true;
+                }
+                break;
+            case (R.id.button_plus):
+                if (!flag) {
+                eqCount = 0;
+                resultView.append(String.format("%c", '+'));
+                    flag = true;
+                }
+                break;
+            case (R.id.button_multiplication):
+                if (!flag) {
+                eqCount = 0;
+                resultView.append(String.format("%c", '*'));
+                    flag = true;
+                }
+                break;
+            case (R.id.button_division):
+                if (!flag) {
+                eqCount = 0;
+                resultView.append(String.format("%c", '/'));
+                    flag = true;
+                }
+                break;
+            case (R.id.button_del):
+                resetCount++;
+                eqCount = 0;
+                if (resetCount == 2) {
+                    entryView.setText(" ");
+                    calculator.setEntryView(" ");
+                    resetCount = 0;
+                }
+                resultView.setText("0");
+                calculator.setResult(0);
+                calculator.setResultView(" ");
+                flag = false;
+                break;
+            case (R.id.button_equally):
+                eqCount++;
+                calculator.calculationMethod(resultView.getText().toString());
+                resultView.setText(calculator.getResultView());
+                entryView.setText(calculator.getEntryView());
+                flag = false;
+                break;
+        }
+    }
+
+    private void setButtonListener() {
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
+        button6.setOnClickListener(this);
+        button7.setOnClickListener(this);
+        button8.setOnClickListener(this);
+        button9.setOnClickListener(this);
+        button0.setOnClickListener(this);
+        buttonPointer.setOnClickListener(this);
+        buttonPlus.setOnClickListener(this);
+        buttonMinus.setOnClickListener(this);
+        buttonMultiplication.setOnClickListener(this);
+        buttonDivision.setOnClickListener(this);
+        buttonEqually.setOnClickListener(this);
+        buttonDel.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (calculator.getResultView() == null) {
+            calculator.setResultView("0");
+        }
+        outState.putParcelable(KeyHistory, calculator);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        calculator = savedInstanceState.getParcelable(KeyHistory);
+        setCalculationHistory(calculator.getResultView(), calculator.getEntryView());
+    }
+
+    private void setCalculationHistory(String result, String history) {
+        entryView.setText(String.format("%s", history));
+        resultView.setText(String.format("%s", result));
+    }
+
+
 }
