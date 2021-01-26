@@ -20,4 +20,8 @@
     <string name="btn_pointer">.</string>
     <string name="btn_equally">=</string>
     <string name="hardcode_view">1234567890</string>
+    <string name="settings">Settings</string>
+    <string name="light_theme">light theme</string>
+    <string name="dark_theme">dark theme</string>
+    <string name="back_to_calculator">Confirm and Return</string>
 </resources>
