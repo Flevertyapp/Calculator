@@ -1,9 +1,11 @@
 package ru.example.mycalc;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private CalculatorLogic calculator = new CalculatorLogic();
+
     private TextView entryView;
     private TextView resultView;
     private Button button1;
@@ -31,16 +34,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button buttonDivision;
     private Button buttonEqually;
     private Button buttonDel;
+    private Button buttonSetting;
 
     int resetCount = 0;
     int eqCount = 0;
     boolean flag = false;
+    boolean pointerFlag = false;
 
     private final static String KeyHistory = "history";
+    private final static int THEME_KEY = 99;
+    private static int CURRENT_THEME;
+    final static String THEME = "THEME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (CURRENT_THEME == 0) {
+            setTheme(R.style.StyleLight);
+        } else {
+            setTheme(R.style.StyleDark);
+        }
         setContentView(R.layout.activity_main);
         initView();
     }
@@ -65,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonDivision = findViewById(R.id.button_division);
         buttonEqually = findViewById(R.id.button_equally);
         buttonDel = findViewById(R.id.button_del);
+        buttonSetting = findViewById(R.id.setting_button);
         setButtonListener();
     }
 
@@ -162,14 +176,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 resetCount = 0;
                 break;
-            case (R.id.button_pointer):
+            case (R.id.button_pointer): //TODO провека на количество точек, с флагом некорректно работает
                 if (resultView.getText().toString().equals("0") || eqCount > 0) {
-                    resultView.setText(String.format("%c", '.'));
+                    resultView.setText(String.format("%s", "0."));
                     eqCount = 0;
                 } else {
                     resultView.append(String.format("%c", '.'));
                 }
                 resetCount = 0;
+
                 break;
             case (R.id.button_minus):
                 if (flag == false) {
@@ -180,22 +195,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.button_plus):
                 if (!flag) {
-                eqCount = 0;
-                resultView.append(String.format("%c", '+'));
+                    eqCount = 0;
+                    resultView.append(String.format("%c", '+'));
                     flag = true;
                 }
                 break;
             case (R.id.button_multiplication):
                 if (!flag) {
-                eqCount = 0;
-                resultView.append(String.format("%c", '*'));
+                    eqCount = 0;
+                    resultView.append(String.format("%c", '*'));
                     flag = true;
                 }
                 break;
             case (R.id.button_division):
                 if (!flag) {
-                eqCount = 0;
-                resultView.append(String.format("%c", '/'));
+                    eqCount = 0;
+                    resultView.append(String.format("%c", '/'));
                     flag = true;
                 }
                 break;
@@ -211,6 +226,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 calculator.setResult(0);
                 calculator.setResultView(" ");
                 flag = false;
+                pointerFlag = false;
                 break;
             case (R.id.button_equally):
                 eqCount++;
@@ -218,7 +234,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resultView.setText(calculator.getResultView());
                 entryView.setText(calculator.getEntryView());
                 flag = false;
+                pointerFlag = false;
                 break;
+            case (R.id.setting_button):
+                Intent settingActivity = new Intent(this, Settings.class); //open settings
+                startActivityForResult(settingActivity, THEME_KEY);
         }
     }
 
@@ -240,6 +260,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonDivision.setOnClickListener(this);
         buttonEqually.setOnClickListener(this);
         buttonDel.setOnClickListener(this);
+        buttonSetting.setOnClickListener(this);
     }
 
     @Override
@@ -263,5 +284,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         resultView.setText(String.format("%s", result));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) { //проверяем какая тема и меняем по пришедшему инту
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode != THEME_KEY) {
+            super.onActivityResult(requestCode, resultCode, data);
+            return;
+        }
+        if (resultCode == RESULT_OK) {
+            //CURRENT_THEME = data.getExtras().getInt(THEME); //может выпасть в НПО
+            recreate();
+        }
+    }
 
 }
